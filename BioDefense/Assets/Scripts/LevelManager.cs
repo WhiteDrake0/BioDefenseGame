@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public Transform[] path;
     
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         main = this;
     }
