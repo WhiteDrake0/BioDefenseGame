@@ -29,7 +29,7 @@ namespace Testing
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                //print("Hello world");
+                print("Hello world");
                 architect.Build(lines[Random.Range(0, lines.Length)]);
             }
         }
