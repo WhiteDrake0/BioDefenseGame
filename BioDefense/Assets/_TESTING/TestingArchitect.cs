@@ -45,27 +45,7 @@ namespace Testing
         // Update is called once per frame
         void Update()
         {
-           /* if (Input.GetKeyDown(KeyCode.Z) && talking)
-            {
-<<<<<<< Updated upstream
-                print("Hello world");
-                architect.Build(lines[Random.Range(0, lines.Length)]);
-=======
-                //print("Hello world");
-                architect.Build("Ok, lets start.");
-            }
-
-            if (Input.GetKeyDown(KeyCode.X) && talking)
-            {
-                //print("Hello world");
-                architect.Build("I see, you need more time to prepare.");
-                dialogue.SetActive(false);
-                characters.SetActive(true);
-                talking = false;
-            }*/
-
             //Make buttons appear when archict is finishing building the syntice
-
             if(!architect.isBuilding && waitForDialogue)
             {
                 characters.SetActive(true);
