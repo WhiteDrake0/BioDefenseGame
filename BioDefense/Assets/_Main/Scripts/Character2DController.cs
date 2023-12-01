@@ -4,31 +4,27 @@ using UnityEngine;
 
 public class Character2DController : MonoBehaviour
 {
-    private Animator anim;
-    private bool talk;
+   
     
     // Start is called before the first frame update
     void Start()
     {
 
-        anim = GetComponentInParent<Animator>();
-        talk = true;
+        //anim = GetComponentInParent<Animator>();
+        //talk = true;
         
     }
 
-    // Update is called once per frame
-    void Update()
+    /*
+     If the character is clicked on, it will start a conversation.
+    I need a click event
+    a 2D box collision 
+     */
+
+    public void Talk()
     {
-        
+        print("Hello world");
     }
 
-    public void OnMouseDown()
-    {
-        Debug.Log("Hello captain");
-
-        if (talk)
-        {
-            anim.SetBool("Talk", true);
-        }
-    }
+   
 }

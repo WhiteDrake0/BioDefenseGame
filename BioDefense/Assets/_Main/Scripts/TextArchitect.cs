@@ -11,7 +11,7 @@ public class TextArchitect
     //public string currentText => tmpro.text;
     public string targetText { get; private set; } = "";
     public string preText { get; private set; } = "";
-    private int preTextLength = 0;
+   // private int preTextLength = 0;
 
     public string fullTargetText => preText + targetText;
 
@@ -28,6 +28,9 @@ public class TextArchitect
     private int characterMultiplier = 1;
 
     public bool hurryUp = false;
+
+    //My variables
+    public event System.Action OnTextBuildingComplete;
 
     public TextArchitect(TextMeshProUGUI tmpro_ui)
     {
@@ -68,6 +71,7 @@ public class TextArchitect
     {
         if (!isBuilding)
         {
+            OnTextBuildingComplete?.Invoke();
             return;
         }
 
