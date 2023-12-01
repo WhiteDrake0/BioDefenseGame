@@ -112,7 +112,7 @@ namespace Testing
                 talking = true;
                 architect.Build("Good morning captain. Ready to bigen todays tasks? (press Z for yes or X for no)");
 
->>>>>>> Stashed changes
+
             }
         }
     }
