@@ -7,9 +7,11 @@ public class Plot : MonoBehaviour
     [Header("Reference")]
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
+    [SerializeField] public AudioClip buildSoundClip; // Reference to your sound clip
+    [SerializeField] private AudioSource audioSource;
 
-
-    private GameObject tower;
+    private GameObject towerObj;
+    public Turret turret;
     private Color startColor;
 
     private void OnMouseEnter()
@@ -25,8 +27,11 @@ public class Plot : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (tower != null)
+        if (UIManager.main.isHoveringUI) return;
+
+        if (towerObj != null)
         {
+            turret.OpenUpgradeUI();
             return;
         }
 
@@ -39,7 +44,17 @@ public class Plot : MonoBehaviour
 
         LevelManager.main.SpendMaterials(towerToBeBuilt.cost);
 
-        tower = Instantiate(towerToBeBuilt.prefab, transform.position, Quaternion.identity);
+        towerObj = Instantiate(towerToBeBuilt.prefab, transform.position, Quaternion.identity);
+
+        turret = towerObj.GetComponent<Turret>();
+
+
+        if (buildSoundClip != null)
+        {
+            // Play the sound
+            audioSource.PlayOneShot(buildSoundClip);
+        }
+
     }
 
     // Start is called before the first frame update

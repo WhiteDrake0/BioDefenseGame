@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Turret : MonoBehaviour
 {
     [Header("References")]
@@ -10,6 +10,11 @@ public class Turret : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
+    [SerializeField] private GameObject upgradeUI;
+    [SerializeField] private Button upgradeButton;
+
+    [SerializeField]  public AudioClip yourSoundClip; // Reference to your sound clip
+    [SerializeField]  private AudioSource audioSource;
 
     [Header("Attribute")]
     [SerializeField] private float targetingRange = 5f;
@@ -85,5 +90,16 @@ public class Turret : MonoBehaviour
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         bulletScript.SetTarget(target);
+
+        if (yourSoundClip != null)
+        {
+            // Play the sound
+            audioSource.PlayOneShot(yourSoundClip);
+        }
+    }
+
+    public void OpenUpgradeUI()
+    {
+        upgradeUI.SetActive(true);
     }
 }
