@@ -25,7 +25,7 @@ public class UpgradeHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         mouse_over = true;  
         UIManager.main.SetHoveringState(true);
-    }
+    }   
 
     public void OnPointerExit(PointerEventData eventData)
     {

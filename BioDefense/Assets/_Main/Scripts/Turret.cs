@@ -20,9 +20,15 @@ public class Turret : MonoBehaviour
     [SerializeField] private float targetingRange = 5f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float bps = 1f; //bullets per second
+    [SerializeField] private int baseUpgradeCost = 100; //bullets per second
+
+    private float bpsBase;
+    private float targetingRangeBase;
 
     private Transform target;
     private float timeUntilFire;
+
+    private int level = 1;
 
     private void OnDrawGizmosSelected()
     {
@@ -55,6 +61,10 @@ public class Turret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bpsBase = bps;
+        targetingRangeBase = targetingRange;
+
+        upgradeButton.onClick.AddListener(Upgrade);
         
     }
 
@@ -98,8 +108,47 @@ public class Turret : MonoBehaviour
         }
     }
 
-    public void OpenUpgradeUI()
+
+    public void Upgrade()
+    {
+        if(baseUpgradeCost > LevelManager.main.materials) return;
+
+        LevelManager.main.SpendMaterials(CalculateCost());
+
+        level++;
+
+        bps = CalculateBPS();
+
+        targetingRange = CalculateRange();
+
+        CloseUpgradeUI();
+    }
+
+    private float CalculateRange()
+    {
+        return bpsBase * Mathf.Pow(level, 0.4f);
+    }
+
+    private float CalculateBPS()
+    {
+        return bpsBase * Mathf.Pow(level, 0.5f);
+    }
+
+    private int CalculateCost()
+    {
+        //every level makes the upgrades more expensive
+        return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
+    }
+
+public void OpenUpgradeUI()
     {
         upgradeUI.SetActive(true);
     }
+
+    public void CloseUpgradeUI()
+    {
+        upgradeUI.SetActive(false);
+        UIManager.main.SetHoveringState(false);
+    }
+
 }
