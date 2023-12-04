@@ -12,7 +12,7 @@ public class WorldLight : MonoBehaviour
 
     public int Days => days;
 
-    private float time = 50;
+    public static float time = 50;
 
     private bool canDayChange = true;
 
