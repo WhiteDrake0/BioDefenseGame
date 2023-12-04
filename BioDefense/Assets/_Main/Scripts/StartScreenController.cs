@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class StartScreenController : MonoBehaviour
@@ -24,5 +25,10 @@ public class StartScreenController : MonoBehaviour
             optionScrren.SetActive(true);
            
         }
+    }
+
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene("Office");
     }
 }

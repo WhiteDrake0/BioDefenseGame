@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 using DIALOGUE;
 
 namespace Testing
@@ -9,29 +11,36 @@ namespace Testing
     {
         DialogSystem ds;
         TextArchitect architect;
-        
+
         //GameObject Variables
         public GameObject characters;
         public GameObject dialogue;
-        public GameObject btnStart;
-        public GameObject btnCancel;
+        public GameObject background;
+        public GameObject protrait;
         public GameObject btnContainerOptions;
         public GameObject btnContainerConfirmation;
+        public GameObject nameText;
+        
 
         //Bool variables
         private bool talking;
-       // private bool startGame;
+        private bool startGame;
         //private bool waitForDialogue;
+        //private bool SeraSpeacking;
 
         //Numeral Variables
         public int maxPeopleToSend = 5;
+        public int count = 0;
 
-        string[] lines = new string[3]
+        string[] intro = new string[4]
         {
-            "Good morning, Captain.",
-            "Today is going to be a busy day for the both of has.",
-            "So, lets get started."
+            "Fifty years have passed since an enigmatic viral outbreak swept the globe, transforming both humanity and the animal kingdom into grotesque delirious entities. (press space to continue)",
+            "Following this peril, the uninfected sought refuge within Elpifloria's fortified bastion, erecting formidable barriers to ward off the relentless onslaught of mutated horrors. (press space to continue)",
+            "The biohazard defense squad emerged as the last line of defense against the relentless tide of aberrations within the city's protective walls. (press space to continue)",
+            "They stood as humanity's shield, warding off the encroaching nightmare that lurked beyond the city limits, tasked with neutralizing these monstrous threats. (press space to continue)"
         };
+
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -41,40 +50,57 @@ namespace Testing
             
             //initiate variables
             talking = false;
-            //startGame = false;
-            /*waitForDialogue = false;
-            architect.OnTextBuildingComplete += OnTextBuildingComplete;*/
+            startGame = false;
+           // waitForDialogue = false;
+            //SeraSpeacking = false;
 
+            StartIntro();
 
         }
 
         // Update is called once per frame
         void Update()
         {
-            //Make buttons appear when archict is finishing building the syntice
-            /*if(!architect.isBuilding && waitForDialogue)
-            {
-                characters.SetActive(true);
-                dialogue.SetActive(false);
-            }*/
-        }
 
-        private void OnTextBuildingComplete()
-        {
-            if (talking)
+            if (Input.GetKeyDown(KeyCode.Space) && count < intro.Length && !architect.isBuilding)
+            {
+                //Debug.Log(architect.isBuilding);
+                StartIntro();
+            }
+            
+            if(Input.GetKeyDown(KeyCode.Space) && count >= intro.Length && !architect.isBuilding && !background.activeSelf)
+            {
+                dialogue.SetActive(false);                
+                background.SetActive(true);
+                characters.SetActive(true);
+                //waitForDialogue = false;
+            }
+
+            if(talking && !architect.isBuilding)
             {
                 talking = false;
-                btnContainerConfirmation.SetActive(false);
-                
+                btnContainerOptions.SetActive(true);
             }
-          
+
+            if(Input.GetKeyDown(KeyCode.Space) && startGame && !architect.isBuilding)
+                SceneManager.LoadScene("BasicDesign");
+
         }
+
+        void StartIntro()
+        {
+            architect.Build(intro[count]);
+            count++;
+           // waitForDialogue = true;
+        }
+
+
 
         public void StartGame()
         {
             btnContainerConfirmation.SetActive(false);
-            architect.Build("Ok, lets start.");
-            //startGame = true;
+            architect.Build("Ok, lets start. (press space to continue)");
+            startGame = true;
 
         }
 
@@ -83,7 +109,7 @@ namespace Testing
             btnContainerConfirmation.SetActive(false);
             btnContainerOptions.SetActive(true);
             architect.Build("I see, you need more time to prepare.");
-            //waitForDialogue = true;
+            
 
         }
 
@@ -124,14 +150,19 @@ namespace Testing
 
         public void StartCharacterDialogue()
         {
-            if (!talking)
-            {
+            if (!talking) {
+
+                
                 characters.SetActive(false);
                 dialogue.SetActive(true);
+                if (!protrait.activeSelf)
+                {
+                    nameText.SetActive(true);
+                    protrait.SetActive(true);
+                }
+                
                 talking = true;
                 architect.Build("Good morning captain. Ready to bigen todays tasks?");
-
-
             }
         }
     }

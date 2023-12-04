@@ -16,7 +16,11 @@ namespace DIALOGUE
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
                 PromptAdvance();
+                
+            }
+                
         }
 
         public void PromptAdvance()
