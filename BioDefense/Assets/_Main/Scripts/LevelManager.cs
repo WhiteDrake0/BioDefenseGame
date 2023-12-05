@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
 
     public Transform startPoint;
     public Transform[] path;
+    public GameObject gameOverUI;
 
     public int materials;
 
@@ -20,6 +21,21 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         materials = 100;
+    }
+
+    public static void Toggle(GameObject gameOverUI,bool state)
+    {
+        
+        gameOverUI.SetActive(state);
+    }
+
+    public void Update()
+    {
+        if(EnemyMovement.pathIndex1 == 16)
+        {
+            Time.timeScale = 0;
+                gameOverUI.SetActive(true);
+        }
     }
 
     public void IncreaseMaterials(int amount)

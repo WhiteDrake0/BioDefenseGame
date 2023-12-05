@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject gameOverUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +20,10 @@ public class GameManager : MonoBehaviour
 
     public void restart()
     {
+        LevelManager.Toggle(gameOverUI, false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    
+        
+
     }
 
     public void Exit()
