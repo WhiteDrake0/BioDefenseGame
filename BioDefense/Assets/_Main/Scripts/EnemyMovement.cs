@@ -7,10 +7,17 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
-    
+    public GameObject gameOverUI;
+
+
     [Header("Attributes")]
     [SerializeField] private float moveSpeed = 2f;
 
+
+    private Animator animator;
+    private Vector3 lastPosition;
+
+    
     private Transform target;
     private int pathIndex = 0;
 
@@ -20,6 +27,9 @@ public class EnemyMovement : MonoBehaviour
     {
         baseSpeed = moveSpeed;
         target = LevelManager.main.path[pathIndex];
+
+        animator = GetComponent<Animator>();
+        lastPosition = transform.position;
     }
 
     private void Update()
@@ -32,6 +42,8 @@ public class EnemyMovement : MonoBehaviour
             {
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
+                
+                gameOverUI.SetActive(true);   
                 return;
             }
             else
@@ -39,7 +51,25 @@ public class EnemyMovement : MonoBehaviour
                 target = LevelManager.main.path[pathIndex];
             }
         }
+
+        // Calculate the direction based on the change in position
+        Vector3 currentPosition = transform.position;
+        Vector3 movementDirection = (currentPosition - lastPosition).normalized;
+
+        // Update Animator parameters based on the movement direction
+        UpdateAnimatorParameters(movementDirection);
+
+        // Update the last position for the next frame
+        lastPosition = currentPosition;
     }
+
+    void UpdateAnimatorParameters(Vector3 direction)
+    {
+        // Set parameters in the Animator based on the movement direction
+        animator.SetFloat("Horizontal", direction.x);
+        animator.SetFloat("Vertical", direction.y);
+    }
+
 
     private void FixedUpdate()
     {
