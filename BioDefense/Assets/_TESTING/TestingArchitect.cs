@@ -20,6 +20,7 @@ namespace Testing
         public GameObject btnContainerOptions;
         public GameObject btnContainerConfirmation;
         public GameObject nameText;
+        public GameObject controls;
         
 
         //Bool variables
@@ -73,6 +74,7 @@ namespace Testing
                 dialogue.SetActive(false);                
                 background.SetActive(true);
                 characters.SetActive(true);
+                controls.SetActive(true);
                 //waitForDialogue = false;
             }
 
