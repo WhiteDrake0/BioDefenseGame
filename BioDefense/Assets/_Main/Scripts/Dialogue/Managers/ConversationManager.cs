@@ -69,12 +69,10 @@ namespace DIALOGUE
         {
             //Show hide speaker name
             if (line.hasSpeaker)
-                dialogSystem.ShowSpeakerName(line.speaker);
-            else
-                dialogSystem.HideSpeakerName();
+                dialogSystem.ShowSpeakerName(line.speaker.displayName);
 
             //Build dialogue
-            yield return BuildDialogue(line.dialogue);
+            yield return BuildLineSegments(line.dialogue);
 
             //Wait for user input
             yield return WaitForUserInput();
@@ -86,11 +84,45 @@ namespace DIALOGUE
             yield return null;
         }
 
-        IEnumerator BuildDialogue(string dialogue)
+        IEnumerator BuildLineSegments(DL_DIALOGUE_Data line)
         {
-            //Build dialogue
-            architec.Build(dialogue);
+            for(int i = 0; i < line.segments.Count; i++)
+            {
+                DL_DIALOGUE_Data.DIALOGUE_SEGEMENT segment = line.segments[i];
 
+                yield return WaitForDialogueSegmentSignalToBeTriggered(segment);
+
+                yield return BuildDialogue(segment.dialogue, segment.appendText);
+            }
+        }
+
+        IEnumerator WaitForDialogueSegmentSignalToBeTriggered(DL_DIALOGUE_Data.DIALOGUE_SEGEMENT segment)
+        {
+            switch (segment.startSignal)
+            {
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.C:
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.A:
+                    yield return WaitForUserInput();
+                    break;
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.WC:
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.WA:
+                    yield return new WaitForSeconds(segment.signalDelay);
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+        IEnumerator BuildDialogue(string dialogue, bool append = false)
+        {
+            //Build the dialogue
+            if (!append)
+                architec.Build(dialogue);
+            else
+                architec.Append(dialogue);
+
+            //wait for the dialogue to complete.
             while (architec.isBuilding)
             {
                 if (userPrompt)

@@ -4,6 +4,10 @@ setScene("Classroom" -s 5.5)
 
 World "Hello, \"Quote Here\" right back at you!"
 
+World "Hello, \"Quote Here\" right back at you!"
+
+World "Hello, \"Quote Here\" right back at you!"
+
 Narrator "And so ended the traditional 'Hello World' conversation." PlaySong(End, -p 0.5), list(players), saveGame(1 -g all -f simple)
 
 Narrator "Fifty years have passed since an enigmatic viral outbreak swept the globe, transforming both humanity and the animal kingdom into grotesque delirious entities. Following this peril, the uninfected sought refuge within Elpifloria's fortified bastion, erecting formidable barriers to ward off the relentless onslaught of mutated horrors."
