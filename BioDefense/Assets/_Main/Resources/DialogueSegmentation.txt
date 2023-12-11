@@ -1,11 +1,11 @@
 
 
-Detective as Tom "Hello world!"
 
-Detective as ??? "This changes everything. We're dealing with a whole new level of evil here."
 
-Partner as ??? at 1:0 "I know. It's hard to believe tha someone could do something... like this."
+Detective "Hello world!" playSong("Funky Beets" -v 0.75 -p 1), setMood(chill)
 
-Detective at 0.5:0.5 as The man "We need to find this killer and put a stop to his experiements. But how do we even begin to track him down?"
+Detective "This changes everything. We're dealing with a whole new level of evil here." playVoice("2_d1_v2" -v 1.5), setBackground(Room1 -t "Diagonal Lines" -s 3.5)
 
-Partner as ??? [0:Angle1, 1:happy] at 0 "Maybe we can start by looking at victims. See if there's any connection between them."
+setAccomplishment("A Lengendary Boombox" true), setCLI(Elen 0:angle1 1:Intrigued -s 2.3 -l true)
+
+showScene(false),StopMusic(all -s 1.5)
