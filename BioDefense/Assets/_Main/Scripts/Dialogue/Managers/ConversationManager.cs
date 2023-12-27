@@ -1,3 +1,4 @@
+using COMMAND;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,10 +25,11 @@ namespace DIALOGUE
             userPrompt = true;
         }
 
-        public void StartConversation (List<string> conversation)
+        public Coroutine StartConversation (List<string> conversation)
         {
             StopConversation();
             process = dialogSystem.StartCoroutine(RunningConversation(conversation));
+            return process;
         }
 
         public void StopConversation()
@@ -84,7 +86,10 @@ namespace DIALOGUE
 
             foreach(DL_COMMAND_DATA.Command command in commands)
             {
-                CommandManager.instance.Execute(command.name, command.arguments);
+                if (command.waitForCompletion)
+                    yield return CommandManager.instance.Execute(command.name, command.arguments);
+                else
+                    CommandManager.instance.Execute(command.name, command.arguments);
             }
 
             yield return null;
