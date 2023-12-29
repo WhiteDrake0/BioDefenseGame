@@ -1,3 +1,4 @@
+using COMMAND;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,10 +25,11 @@ namespace DIALOGUE
             userPrompt = true;
         }
 
-        public void StartConversation (List<string> conversation)
+        public Coroutine StartConversation (List<string> conversation)
         {
             StopConversation();
             process = dialogSystem.StartCoroutine(RunningConversation(conversation));
+            return process;
         }
 
         public void StopConversation()
@@ -61,7 +63,9 @@ namespace DIALOGUE
                     yield return Line_RunCommands(line);
                 }
 
-                //yield return new WaitForSeconds(1);
+                if(line.hasDialogue)
+                   //Wait for user input
+                   yield return WaitForUserInput();
             }
         }
 
@@ -69,28 +73,67 @@ namespace DIALOGUE
         {
             //Show hide speaker name
             if (line.hasSpeaker)
-                dialogSystem.ShowSpeakerName(line.speaker);
-            else
-                dialogSystem.HideSpeakerName();
+                dialogSystem.ShowSpeakerName(line.speakerData.displayName);
 
             //Build dialogue
-            yield return BuildDialogue(line.dialogue);
+            yield return BuildLineSegments(line.dialogueData);
 
-            //Wait for user input
-            yield return WaitForUserInput();
         }
 
         IEnumerator Line_RunCommands(DIALOGUE_LINE line)
         {
-            Debug.Log(line.commands);
+            List<DL_COMMAND_DATA.Command> commands = line.commandsData.commands;
+
+            foreach(DL_COMMAND_DATA.Command command in commands)
+            {
+                if (command.waitForCompletion)
+                    yield return CommandManager.instance.Execute(command.name, command.arguments);
+                else
+                    CommandManager.instance.Execute(command.name, command.arguments);
+            }
+
             yield return null;
         }
 
-        IEnumerator BuildDialogue(string dialogue)
+        IEnumerator BuildLineSegments(DL_DIALOGUE_Data line)
         {
-            //Build dialogue
-            architec.Build(dialogue);
+            for(int i = 0; i < line.segments.Count; i++)
+            {
+                DL_DIALOGUE_Data.DIALOGUE_SEGEMENT segment = line.segments[i];
 
+                yield return WaitForDialogueSegmentSignalToBeTriggered(segment);
+
+                yield return BuildDialogue(segment.dialogue, segment.appendText);
+            }
+        }
+
+        IEnumerator WaitForDialogueSegmentSignalToBeTriggered(DL_DIALOGUE_Data.DIALOGUE_SEGEMENT segment)
+        {
+            switch (segment.startSignal)
+            {
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.C:
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.A:
+                    yield return WaitForUserInput();
+                    break;
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.WC:
+                case DL_DIALOGUE_Data.DIALOGUE_SEGEMENT.StartSignal.WA:
+                    yield return new WaitForSeconds(segment.signalDelay);
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+        IEnumerator BuildDialogue(string dialogue, bool append = false)
+        {
+            //Build the dialogue
+            if (!append)
+                architec.Build(dialogue);
+            else
+                architec.Append(dialogue);
+
+            //wait for the dialogue to complete.
             while (architec.isBuilding)
             {
                 if (userPrompt)

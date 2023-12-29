@@ -1,0 +1,11 @@
+
+
+
+
+Detective "Hello world!" playSong("Funky Beets" -v 0.75 -p 1), setMood(chill)
+
+Detective "This changes everything. We're dealing with a whole new level of evil here." playVoice("2_d1_v2" -v 1.5), setBackground(Room1 -t "Diagonal Lines" -s 3.5)
+
+setAccomplishment("A Lengendary Boombox" true), setCLI(Elen 0:angle1 1:Intrigued -s 2.3 -l true)
+
+showScene(false),StopMusic(all -s 1.5)

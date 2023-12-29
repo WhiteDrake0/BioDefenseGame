@@ -1,7 +1,0 @@
-Narrator "Fifty years have passed since an enigmatic viral outbreak swept the globe, transforming both humanity and the animal kingdom into grotesque delirious entities."
-
-Narrator "Following this peril, the uninfected sought refuge within Elpifloria's fortified bastion, erecting formidable barriers to ward off the relentless onslaught of mutated horrors."
-
-Narrator "The biohazard defense squad emerged as the last line of defense against the relentless tide of aberrations within the city's protective walls." 
-
-Narrator "They stood as humanity's shield, warding off the encroaching nightmare that lurked beyond the city limits, tasked with neutralizing these monstrous threats." EndCutScene

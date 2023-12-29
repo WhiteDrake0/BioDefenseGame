@@ -7,7 +7,6 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
-    public GameObject gameOverUI;
 
 
     [Header("Attributes")]
@@ -16,11 +15,11 @@ public class EnemyMovement : MonoBehaviour
 
     private Animator animator;
     private Vector3 lastPosition;
+ 
 
     
     private Transform target;
     private int pathIndex = 0;
-    public static int pathIndex1;
 
     private float baseSpeed;
 
@@ -43,8 +42,9 @@ public class EnemyMovement : MonoBehaviour
             {
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
-                
-                gameOverUI.SetActive(true);   
+                pathIndex1 = pathIndex;
+
+
                 return;
             }
             else
