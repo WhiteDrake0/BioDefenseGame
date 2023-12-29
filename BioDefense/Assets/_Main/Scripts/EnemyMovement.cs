@@ -21,6 +21,8 @@ public class EnemyMovement : MonoBehaviour
     private Transform target;
     private int pathIndex = 0;
 
+    public static int pathIndex1 = 0;
+
     private float baseSpeed;
 
     private void Start()

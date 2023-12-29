@@ -22,6 +22,12 @@ public class LevelManager : MonoBehaviour
         materials = 100;
     }
 
+    public static void Toggle(GameObject gameOverUI, bool state)
+    {
+
+        gameOverUI.SetActive(state);
+    }
+
     public void Update()
     {
         if (EnemyMovement.pathIndex1 == 16)

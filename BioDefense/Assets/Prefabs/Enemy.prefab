@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2070987029076300637}
-  gameOverUI: {fileID: 2521791202831287048, guid: 00d050b10dd60af4d850bd8f32d55abe, type: 3}
+  gameOverUI: {fileID: 6984573033382511575, guid: 687e88d8f7fcde249875d1910d76da6a, type: 3}
   moveSpeed: 2
 --- !u!114 &4972406950954113497
 MonoBehaviour:
@@ -173,5 +173,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6edad34c9a836464c91e6ee98ee2b377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 4
-  materialsWorth: 35
+  hitPoints: 2
+  materialsWorth: 50
