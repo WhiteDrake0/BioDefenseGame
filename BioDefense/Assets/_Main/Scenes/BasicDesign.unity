@@ -14390,6 +14390,7 @@ GameObject:
   - component: {fileID: 1610302775}
   - component: {fileID: 1610302776}
   - component: {fileID: 1610302777}
+  - component: {fileID: 1610302778}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -14429,6 +14430,9 @@ MonoBehaviour:
   - {fileID: 1319252367988398334, guid: fe5cb15428c9e934c8904c41a7427528, type: 3}
   - {fileID: 1319252367988398334, guid: fe5cb15428c9e934c8904c41a7427528, type: 3}
   - {fileID: 1319252367988398334, guid: e550ebaefc570414899820526bf354d0, type: 3}
+  - {fileID: 1276868148518970138, guid: 9b5a88ad32cf8e94c9409ddbd5142267, type: 3}
+  - {fileID: 1276868148518970138, guid: 9b5a88ad32cf8e94c9409ddbd5142267, type: 3}
+  - {fileID: 1276868148518970138, guid: 9b5a88ad32cf8e94c9409ddbd5142267, type: 3}
   baseEnemies: 10
   enemiesPerSecond: 2
   timeBetweenWaves: 5
@@ -14464,6 +14468,7 @@ MonoBehaviour:
   - {fileID: 1957878899}
   - {fileID: 1600632045}
   - {fileID: 1253368427}
+  gameOverUI: {fileID: 677806966}
   materials: 0
 --- !u!114 &1610302775
 MonoBehaviour:
@@ -14539,6 +14544,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1610302778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610302771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6381685c6c70a49478434619b1dd76d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settlementStructurePrefab: {fileID: 0}
+  maxStructureLevel: 4
 --- !u!1001 &1621045180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15576,19 +15595,19 @@ MonoBehaviour:
     serializedVersion: 2
     key0: {r: 0.17476988, g: 0.31063417, b: 0.8207547, a: 1}
     key1: {r: 0.82474107, g: 0.65846, b: 0.24668196, a: 1}
-    key2: {r: 0.8515674, g: 0.67558974, b: 0.22809654, a: 1}
-    key3: {r: 0.8301887, g: 0.62206864, b: 0.20027459, a: 1}
-    key4: {r: 0.7511199, g: 0.3808064, b: 0.16584316, a: 1}
-    key5: {r: 0.7176471, g: 0.28257358, b: 0.14509802, a: 1}
-    key6: {r: 0.7176471, g: 0.28257358, b: 0.14509802, a: 0}
+    key2: {r: 0.85621226, g: 0.73265, b: 0.5125012, a: 1}
+    key3: {r: 0.8773585, g: 0.8225063, b: 0.7662106, a: 1}
+    key4: {r: 0.8515674, g: 0.67558974, b: 0.22809654, a: 1}
+    key5: {r: 0.14590855, g: 0.22499597, b: 0.7169812, a: 1}
+    key6: {r: 0.14590855, g: 0.22499597, b: 0.7169812, a: 0}
     key7: {r: 0.14590855, g: 0.22499597, b: 0.7169812, a: 0}
     ctime0: 386
     ctime1: 18119
-    ctime2: 30262
-    ctime3: 33924
-    ctime4: 42020
-    ctime5: 46453
-    ctime6: 48573
+    ctime2: 29298
+    ctime3: 38357
+    ctime4: 44140
+    ctime5: 61873
+    ctime6: 61873
     ctime7: 61873
     atime0: 0
     atime1: 39514
@@ -15599,7 +15618,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 8
+    m_NumColorKeys: 6
     m_NumAlphaKeys: 3
   light: {fileID: 1751413773}
 --- !u!1001 &1781311043

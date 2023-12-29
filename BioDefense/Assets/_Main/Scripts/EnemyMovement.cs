@@ -20,6 +20,7 @@ public class EnemyMovement : MonoBehaviour
     
     private Transform target;
     private int pathIndex = 0;
+    public static int pathIndex1;
 
     private float baseSpeed;
 
@@ -37,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
         if (Vector2.Distance(target.position, transform.position) <= 0.1f)
         {
             pathIndex++;
-
+            pathIndex1 = pathIndex;
             if (pathIndex == LevelManager.main.path.Length)
             {
                 EnemySpawner.onEnemyDestroy.Invoke();

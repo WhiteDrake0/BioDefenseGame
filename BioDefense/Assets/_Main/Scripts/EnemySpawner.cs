@@ -73,6 +73,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void EndWave()
     {
+        DestroyObjectsOnLayer();
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
@@ -99,5 +100,18 @@ public class EnemySpawner : MonoBehaviour
     private void EnemyDestroyed()
     {
         enemiesAlive--;
+    }
+
+    private void DestroyObjectsOnLayer()
+    {
+        GameObject[] objectsOnLayer = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in objectsOnLayer)
+        {
+            if (obj.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                Destroy(obj);
+            }
+        }
     }
 }

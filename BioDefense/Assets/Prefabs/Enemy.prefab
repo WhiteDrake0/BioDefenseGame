@@ -173,5 +173,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6edad34c9a836464c91e6ee98ee2b377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 2
-  materialsWorth: 50
+  hitPoints: 4
+  materialsWorth: 35
