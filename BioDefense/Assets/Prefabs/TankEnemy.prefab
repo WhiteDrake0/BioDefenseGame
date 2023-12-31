@@ -159,7 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2070987029076300637}
-  gameOverUI: {fileID: 0}
   moveSpeed: 1.25
 --- !u!114 &4972406950954113497
 MonoBehaviour:
@@ -175,3 +174,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 6
   materialsWorth: 55
+  prefabToInstantiate: {fileID: 8565825204969334048, guid: 9bbca818926ba0546a0852ac50507ed1, type: 3}
