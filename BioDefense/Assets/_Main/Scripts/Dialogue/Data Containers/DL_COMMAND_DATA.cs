@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace DIALOGUE
 {
@@ -31,6 +32,7 @@ namespace DIALOGUE
             {
                 Command command = new Command();
                 int index = cmd.IndexOf(ARGUMENTSCONTAINER_ID);
+                Debug.Log(cmd.Substring(0, index).Trim());
                 command.name = cmd.Substring(0, index).Trim();
 
                 if (command.name.ToLower().StartsWith(WAITCOMMAND_ID))

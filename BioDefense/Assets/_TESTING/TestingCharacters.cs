@@ -26,24 +26,29 @@ namespace Testing
         IEnumerator Test()
         {
             Character_Sprite Raelin = CreateCharacter("Raelin") as Character_Sprite;
-            /* Character_Sprite Guard = CreateCharacter("Guard as Generic") as Character_Sprite;*/
+            Character_Sprite Guard = CreateCharacter("Guard as Generic") as Character_Sprite;
+
+            Guard.SetPosition(Vector2.zero);
+            Raelin.SetPosition(new Vector2(1, 0));
 
             yield return new WaitForSeconds(1);
 
-            yield return Raelin.UnHighlight();
+            Raelin.TransitionSprite(Raelin.GetSprite("A2"));
+            Raelin.TransitionSprite(Raelin.GetSprite("A_Shocked"), 1);
+            Raelin.Animate("Hop");
+            yield return Raelin.Say("Where did this wind chill come from");
 
-            yield return new WaitForSeconds(1);
+            Guard.FaceRight();
+            Guard.MoveToPosition(new Vector2(0.1f, 0));
+            Guard.Animate("Shiver", true);
+            yield return Guard.Say("I'don't know - but I hate it!{a} It's freezing!");
 
-            yield return Raelin.TrantionColor(Color.red);
+            Raelin.TransitionSprite(Raelin.GetSprite("B2"));
+            Raelin.TransitionSprite(Raelin.GetSprite("B_Happy"), 1);
+            yield return Raelin.Say("Oh, it's over!");
 
-            yield return new WaitForSeconds(1);
-
-            yield return Raelin.Highlight();
-
-            yield return new WaitForSeconds(1);
-
-            yield return Raelin.TrantionColor(Color.white);
-
+            Guard.Animate("Shiver", false);
+            yield return Guard.Say("Thank the lord...{a} I'm not wearing enough clothes for that crap.");
 
             yield return null;
         }

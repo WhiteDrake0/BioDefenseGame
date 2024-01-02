@@ -2,6 +2,8 @@ using COMMAND;
 using System;
 using System.Collections;
 using UnityEngine;
+using Music;
+using Background;
 
 namespace Testing
 {
@@ -9,72 +11,36 @@ namespace Testing
     {
         new public static void Extend(CommandDatabase database)
         {
-            //Add command with no parameters
-            database.AddCommand("print", new Action(PrintDefaultMessage));
-            database.AddCommand("print_1p", new Action<string>(PrintUseermessage)); //This command takes a singule parameter
-            database.AddCommand("print_mp", new Action<string[]>(PrintLines));
+            //Sound commands
+            database.AddCommand("playsound", new Action<string>(PlaySound));
+            database.AddCommand("startmusic", new Action<string>(StartMusic));
+            database.AddCommand("endmusic", new Action(EndMusic));
 
-            //Add lambda with no parameters
-            database.AddCommand("lambda", new Action(() => { Debug.Log("Printing a default message to console."); }));
-            database.AddCommand("lambda_1p", new Action<string>((arg) => { Debug.Log($"User message: '{arg}'"); }));
-            database.AddCommand("lambda_mp", new Action<string[]>((args) => { Debug.Log(string.Join(", ", args)); }));
-
-            //add coroutine with no parameters
-            database.AddCommand("processs", new Func<IEnumerator>(SimpleProcess));
-            database.AddCommand("processs_1p", new Func<string, IEnumerator>(LineProcess));
-            database.AddCommand("processs_mp", new Func<string[], IEnumerator>(MultiLineProcess));
-
-            //Special Example
-
+            //Background commands
+            database.AddCommand("setbackground", new Action<string>(SetBackground));
         }
 
-        private static void PrintDefaultMessage()
+        public static void PlaySound(string soundName)
         {
-            Debug.Log("Printing a default message to console.");
+            
+            SoundManager.instance.PlaySound(soundName); ;
+
         }
 
-        private static void PrintUseermessage(string message)
+        public static void StartMusic(string soundName)
         {
-            Debug.Log($"User message: '{message}'");
+            SoundManager.instance.StartMusic(soundName);
         }
 
-        private static void PrintLines(string[] lines)
+        public static void EndMusic()
         {
-            int i = 1;
-            foreach (string line in lines)
-            {
-                Debug.Log($"{i++}. '{line}'");
-            }
+            SoundManager.instance.EndMusic();
         }
 
-        private static IEnumerator SimpleProcess()
+        public static void SetBackground(string name)
         {
-            for (int i = 1; i <= 5; i++)
-            {
-                Debug.Log($"Process Running... [{i}]");
-                yield return new WaitForSeconds(i);
-            }
+            BackgroundController.instance.SetBackground(name);
         }
-
-        private static IEnumerator LineProcess(string data)
-        {
-            if (int.TryParse(data, out int num))
-            {
-                for (int i = 1; i <= num; i++)
-                {
-                    Debug.Log($"Process Running... [{i}]");
-                    yield return new WaitForSeconds(i);
-                }
-            }
-        }
-
-        private static IEnumerator MultiLineProcess(string[] data)
-        {
-            foreach (string line in data)
-            {
-                Debug.Log($"Process Running... [{line}]");
-                yield return new WaitForSeconds(0.5f);
-            }
-        }
+        
     }
 }

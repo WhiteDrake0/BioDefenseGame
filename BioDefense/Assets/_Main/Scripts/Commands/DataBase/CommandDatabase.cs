@@ -13,6 +13,7 @@ namespace COMMAND
 
         public void AddCommand(string commandName, Delegate command)
         {
+            commandName = commandName.ToLower();
             if (!database.ContainsKey(commandName))
                 database.Add(commandName, command);
             else
@@ -21,6 +22,7 @@ namespace COMMAND
 
         public Delegate GetCommand(string commandName)
         {
+            commandName = commandName.ToLower();
             //Debug.Log(!database.ContainsKey(commandName));
             if (!database.ContainsKey(commandName))
             {

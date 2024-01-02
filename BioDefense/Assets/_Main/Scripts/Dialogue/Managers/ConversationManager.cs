@@ -2,6 +2,7 @@ using COMMAND;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CHARACTERS;
 
 namespace DIALOGUE
 {
@@ -43,6 +44,7 @@ namespace DIALOGUE
 
         IEnumerator RunningConversation(List<string> conversation)
         {
+            //Debug.Log(conversation.Count);
             for(int i = 0; i < conversation.Count; i++)
             {
                 //Don't show any blank lines or try to run any logic on then.
@@ -50,6 +52,8 @@ namespace DIALOGUE
                     continue;
 
                 DIALOGUE_LINE line = DialogueParser.Parse(conversation[i]);
+
+                //Debug.Log(line);
 
                 //Show dialogue
                 if(line.hasDialogue)
@@ -73,11 +77,36 @@ namespace DIALOGUE
         {
             //Show hide speaker name
             if (line.hasSpeaker)
-                dialogSystem.ShowSpeakerName(line.speakerData.displayName);
+                HandleSpeakerLogic(line.speakerData);
 
             //Build dialogue
             yield return BuildLineSegments(line.dialogueData);
 
+        }
+
+        private void HandleSpeakerLogic(DL_SPEAKER_DATA speakerData)
+        {
+            bool characterMustBeCreated = (speakerData.makeCharacterEnter || speakerData.isCastingExpressions || speakerData.isCastingPosition);
+            Character character = CharacterManager.instance.GetCharacter(speakerData.name, createIdDoesNotExist: characterMustBeCreated);
+
+            if (speakerData.makeCharacterEnter && (!character.isVisible && !character.isRevealing))
+                character.Show();
+
+            //Add character name to the UI
+            dialogSystem.ShowSpeakerName(speakerData.displayName);
+
+            DialogSystem.instance.ApplySpeakerDataToDialogueContainer(speakerData.name);
+
+            //Cast position
+            if (speakerData.isCastingPosition)
+                character.MoveToPosition(speakerData.castPosition);
+
+            //Cast expressions
+            if (speakerData.isCastingExpressions)
+            {
+                foreach (var ce in speakerData.CastExpressions)
+                    character.OnReceiveCastExpression(ce.layer, ce.expression);
+            }
         }
 
         IEnumerator Line_RunCommands(DIALOGUE_LINE line)
@@ -86,7 +115,7 @@ namespace DIALOGUE
 
             foreach(DL_COMMAND_DATA.Command command in commands)
             {
-                if (command.waitForCompletion)
+                if (command.waitForCompletion || command.name == "wait")
                     yield return CommandManager.instance.Execute(command.name, command.arguments);
                 else
                     CommandManager.instance.Execute(command.name, command.arguments);

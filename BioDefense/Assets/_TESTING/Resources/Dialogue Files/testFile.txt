@@ -1,15 +1,15 @@
-John "Hello World!" list(items -f long), playSong("Intro Song" -v 1)
+SetBackground(OldWorld)
 
-setScene("Classroom" -s 5.5)
+Narrator "A long time ago the world was peacefull and people where moving a long there days only with the worries of there  "
 
-World "Hello, \"Quote Here\" right back at you!"
+wait(1000)
 
-World "Hello, \"Quote Here\" right back at you!"
+wait(1), createcharacter(Raelin -e true), createcharacter("Guard1 as Generic" -e true -i true), createcharacter(Female Student 2 -e true -i true)
 
-World "Hello, \"Quote Here\" right back at you!"
+[wait]movecharacter(Raelin 1 -2.5 0.75)
 
-Narrator "And so ended the traditional 'Hello World' conversation." PlaySong(End, -p 0.5), list(players), saveGame(1 -g all -f simple)
+Raelin "Thank you for joining me!{c}I'm looking foward to writing some commands with you!"
 
-Narrator "Fifty years have passed since an enigmatic viral outbreak swept the globe, transforming both humanity and the animal kingdom into grotesque delirious entities. Following this peril, the uninfected sought refuge within Elpifloria's fortified bastion, erecting formidable barriers to ward off the relentless onslaught of mutated horrors."
+MoveCharacter(Guard1 0 -spd 0.5), movecharacter(Female Student 2 0.1 -spd 0.5), Hide(Raelin)
 
-Narrator "The biohazard defense squad emerged as the last line of defense against the relentless tide of aberrations within the city's protective walls. They stood as humanity's shield, warding off the encroaching nightmare that lurked beyond the city limits, tasked with neutralizing these monstrous threats. However, in the never-ending battle for survival, even the mightiest of defenses would occasionally crumble, allowing formidable mutated entities to breach the defenses."
+Guard1 "Where did she go?"

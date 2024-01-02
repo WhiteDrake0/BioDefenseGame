@@ -8,8 +8,10 @@ namespace CHARACTERS
 {
     public abstract class Character
     {
-        public const bool ENABLE_ON_START = true;
+        public const bool ENABLE_ON_START = false;
         private const float UNHIGHLIGHTED_DARKEN_STREANGTH = 0.65f;
+        public const bool DEFAULT_ORIENTATION_IS_FACING_LEFT = true;
+        public const string ANIMATION_REFRESH_TRIGGER = "Refresh";
 
         public string name = "";
         public string displayName = "";
@@ -21,7 +23,8 @@ namespace CHARACTERS
         protected Color highlightColor => color;
         protected Color unhighlightColor => new Color(color.r * UNHIGHLIGHTED_DARKEN_STREANGTH, color.g * UNHIGHLIGHTED_DARKEN_STREANGTH, color.b * UNHIGHLIGHTED_DARKEN_STREANGTH, color.a);
         public bool highlighted { get; private set; } = true;
-
+        protected bool facingLeft = DEFAULT_ORIENTATION_IS_FACING_LEFT;
+        public int priority { get; protected set; }
         protected CharacterManager manager => CharacterManager.instance;
 
         public DialogSystem dialogSystem => DialogSystem.instance;
@@ -31,6 +34,7 @@ namespace CHARACTERS
         protected Coroutine co_moving;
         protected Coroutine co_changingColor;
         protected Coroutine co_highlighting;
+        protected Coroutine co_flipping;
         public bool isRevealing => co_revealing != null;
         public bool isHiding => co_hiding != null;
         public bool isMoving => co_moving != null;
@@ -38,6 +42,9 @@ namespace CHARACTERS
         public bool isHighlighting => (highlighted && co_highlighting != null);
         public bool isUnHighlighting => (!highlighted && co_highlighting != null);
         public virtual bool isVisible { get; set; }
+        public bool isFacingLeft => facingLeft;
+        public bool isFacingRight => !facingLeft;
+        public bool isFlipping => co_flipping != null;
 
         public Character(string name, CharacterConfigData config, GameObject prefab)
         {
@@ -45,7 +52,7 @@ namespace CHARACTERS
             displayName = name;
             this.config = config;
 
-            if(prefab != null)
+            if (prefab != null)
             {
                 GameObject ob = Object.Instantiate(prefab, manager.characterPanel);
                 ob.name = manager.FormatCharacterPath(manager.characterPrefabNameFormat, name);
@@ -126,29 +133,29 @@ namespace CHARACTERS
 
             co_moving = manager.StartCoroutine(MovingToPosition(position, speed, smooth));
 
-             return co_moving;
+            return co_moving;
         }
 
-        private IEnumerator MovingToPosition (Vector2 position, float speed, bool smooth)
+        private IEnumerator MovingToPosition(Vector2 position, float speed, bool smooth)
         {
             (Vector2 minAnchorTarget, Vector2 maxAnchorTarget) = ConvertUITargetPositionToRelativeCharacterAnchorTargets(position);
             Vector2 padding = root.anchorMax - root.anchorMin;
 
-            while(root.anchorMin != minAnchorTarget || root.anchorMax != maxAnchorTarget) //while(root.anchorMin != minAnchorTarget || root.anchorMin != maxAnchorTarget)
+            while (root.anchorMin != minAnchorTarget || root.anchorMax != maxAnchorTarget) //while(root.anchorMin != minAnchorTarget || root.anchorMin != maxAnchorTarget)
             {
                 root.anchorMin = smooth ?
                     Vector2.Lerp(root.anchorMin, minAnchorTarget, speed * Time.deltaTime)
                     : Vector2.MoveTowards(root.anchorMin, minAnchorTarget, speed * Time.deltaTime * 0.35f);
 
                 root.anchorMax = root.anchorMin + padding;
-                
+
                 if (smooth && Vector2.Distance(root.anchorMin, minAnchorTarget) <= 0.001f) // if (smooth && Vector2.Distance(root.anchorMin, minAnchorTarget) <= 0.001f)
                 {
                     root.anchorMin = minAnchorTarget;
                     root.anchorMax = maxAnchorTarget;
 
                     break;
-                }                   
+                }
 
                 yield return null;
             }
@@ -221,12 +228,71 @@ namespace CHARACTERS
             return co_highlighting;
         }
 
-        public virtual IEnumerator Highlighting (bool highlight, float speedMultiplier)
+        public virtual IEnumerator Highlighting(bool highlight, float speedMultiplier)
         {
             Debug.Log("Highlighting is not aplicable on this character type!");
             yield return null;
         }
 
+        public Coroutine Flip(float speed = 1, bool immediate = false)
+        {
+            if (isFacingLeft)
+                return FaceRight(speed, immediate);
+            else
+                return FaceLeft(speed, immediate);
+        }
+
+        public Coroutine FaceLeft(float speed = 1, bool immediate = false)
+        {
+            if (isFlipping)
+                manager.StopCoroutine(co_flipping);
+
+            facingLeft = true;
+            co_flipping = manager.StartCoroutine(FaceDirection(facingLeft, speed, immediate));
+
+            return co_flipping;
+        }
+
+        public Coroutine FaceRight(float speed = 1, bool immediate = false)
+        {
+            if (isFlipping)
+                manager.StopCoroutine(co_flipping);
+
+            facingLeft = false;
+            co_flipping = manager.StartCoroutine(FaceDirection(facingLeft, speed, immediate));
+
+            return co_flipping;
+        }
+
+        public virtual IEnumerator FaceDirection(bool faceLeft, float speedMultiplier, bool immediate)
+        {
+            Debug.Log("Cannot flip a character of this type!");
+            yield return null;
+        }
+
+        public void SetPriority(int priority, bool autoSorteCharactersOnUI = true)
+        {
+            this.priority = priority;
+
+            if (autoSorteCharactersOnUI)
+                manager.SortCharacters();
+        }
+
+        public void Animate(string animation)
+        {
+            animator.SetTrigger(animation);
+        }
+
+        public void Animate(string animation, bool state)
+        {
+            animator.SetBool(animation, state);
+            animator.SetTrigger(ANIMATION_REFRESH_TRIGGER);
+        }
+
+        public virtual void OnReceiveCastExpression(int layer, string expression)
+        {
+            return;
+        }
         public enum CharacterType
         {
             Text,
@@ -234,6 +300,8 @@ namespace CHARACTERS
             SpriteSheet,
             Live2D,
             Model3D
+
         }
     }
+    
 }

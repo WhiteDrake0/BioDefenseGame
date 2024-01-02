@@ -12,10 +12,16 @@ namespace DIALOGUE
         /// <summary>
         /// This is the name that will display in the dialogue box to show who is speaking.
         /// </summary>
-        public string displayName => castName != string.Empty ? castName : name;
+        public string displayName => isCastingName ? castName : name;
 
         public Vector2 castPosition;
         public List<(int layer, string expression)> CastExpressions { get; set; }
+
+        public bool isCastingName => castName != string.Empty;
+        public bool isCastingPosition = false;
+        public bool isCastingExpressions => CastExpressions.Count > 0;
+
+        public bool makeCharacterEnter = false;
 
         private const string NAMECAST_ID = " as ";
         private const string POSITION_ID = " at ";
@@ -24,10 +30,25 @@ namespace DIALOGUE
         private const char EXPRESSIONLAYER_JOINER = ',';
         private const char EXPRESSIONLAYER_DELIMITER = ':';
 
+        private const string ENTER_KEYWORD = "enter ";
+
         public bool hasSpeacker => displayName != string.Empty;
+
+        private string ProcessKeywords(string rawSpeaker)
+        {
+            if (rawSpeaker.StartsWith(ENTER_KEYWORD))
+            {
+                rawSpeaker = rawSpeaker.Substring(ENTER_KEYWORD.Length);
+                makeCharacterEnter = true;
+            }
+
+            return rawSpeaker;
+        }
 
         public DL_SPEAKER_DATA(string rawSpeaker)
         {
+            rawSpeaker = ProcessKeywords(rawSpeaker);
+
             string pattern = @$"{NAMECAST_ID}|{POSITION_ID}|{EXPRESSION_ID.Insert(EXPRESSION_ID.Length - 1, @"\")}";
             MatchCollection matchs = Regex.Matches(rawSpeaker, pattern);
 
@@ -58,6 +79,7 @@ namespace DIALOGUE
                 }
                 else if (match.Value == POSITION_ID)
                 {
+                    isCastingPosition = true;
                     startIndex = match.Index + POSITION_ID.Length;
                     endIndex = i < matchs.Count - 1 ? matchs[i + 1].Index : rawSpeaker.Length;
                     string castPos = rawSpeaker.Substring(startIndex, endIndex - startIndex);
@@ -75,13 +97,15 @@ namespace DIALOGUE
                     endIndex = i < matchs.Count - 1 ? matchs[i + 1].Index : rawSpeaker.Length;
                     string castExp = rawSpeaker.Substring(startIndex, endIndex - (startIndex + 1));
 
-                    Debug.Log(i < matchs.Count - 1);
-
                     CastExpressions = castExp.Split(EXPRESSIONLAYER_JOINER)
                         .Select(x =>
                         {
                             var parts = x.Trim().Split(EXPRESSIONLAYER_DELIMITER);
-                            return (int.Parse(parts[0]), parts[1]);
+
+                            if (parts.Length == 2)
+                                return (int.Parse(parts[0]), parts[1]);
+                            else
+                                return (0, parts[0]);
 
                         }).ToList();
                 }

@@ -1,0 +1,13 @@
+SetBackground(OldWorld)
+
+Captain “A long time ago, the world was peaceful, and people moved along their days with only the worries of their lives preoccupying their minds. But one day...”
+
+SetBackground(DestroyedCity) 
+
+Captain “An unknown viral outbreak plunged the world into chaos, and mutated monstrosities began popping up around the world.{a} Cities fell, and hundreds of people died or became infected.”
+
+SetBackground(H)
+
+Captain “A small population of uninfected people sought refuge in the ancient city of Elpifloria.{c}This city was surrounded by giant, sturdy stone walls that had withstood the test of time.”
+
+Captain “Inside the city, a biohazard defense squad assembled from surviving members of the army, engineers, and scientists. Their objective was to defend the last bastion of humanity, develop a weapon capable of putting an end to this apocalyptic nightmare, and restore hope for a better tomorrow.{c}But one day...”
