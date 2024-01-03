@@ -116,16 +116,16 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  bulletPrefab: {fileID: 7901711196033298829, guid: 6c711cd3bb47da74c8ac1d08324d1de6, type: 3}
+  bulletPrefab: {fileID: 4729294227288524347, guid: fb3c60da8f94a1b48bf18dd724501e2b, type: 3}
   firingPoint: {fileID: 6602667115003834760}
-  upgradeUI: {fileID: 2875001194266979640}
-  upgradeButton: {fileID: 7560738871892557532}
-  yourSoundClip: {fileID: 8300000, guid: 3d602bfd4f58cb848b262c22b5f21cd1, type: 3}
+  upgradeUI: {fileID: 0}
+  upgradeButton: {fileID: 0}
+  yourSoundClip: {fileID: 8300000, guid: b084a461c6642874e8d93769cd30b105, type: 3}
   audioSource: {fileID: 784158981863153008}
-  targetingRange: 3
-  rotationSpeed: 200
-  bps: 1
-  baseUpgradeCost: 100
+  targetingRange: 1.5
+  rotationSpeed: 100
+  bps: 0.5
+  baseUpgradeCost: 0
 --- !u!82 &784158981863153008
 AudioSource:
   m_ObjectHideFlags: 0

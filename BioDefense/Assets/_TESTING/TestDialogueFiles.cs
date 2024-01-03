@@ -19,7 +19,7 @@ namespace Testing
         {
             /* if(PlayerPrefs.HasKey("Materials"))
               material.text = "Material: " + PlayerPrefs.GetInt("Materials").ToString();*/
-            material.text = "Material: 5000";
+            //material.text = "Material: 5000";
            
             SartConversation();
 

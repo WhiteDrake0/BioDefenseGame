@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        materials = 20000;
+        materials = 5000;
     }
 
     public static void Toggle(GameObject gameOverUI, bool state)
