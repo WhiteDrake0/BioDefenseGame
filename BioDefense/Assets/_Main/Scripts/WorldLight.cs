@@ -20,13 +20,29 @@ public class WorldLight : MonoBehaviour
 
     public OnDayChanged DayChanged;
 
+    private LevelManager level;
+
+    private void Start()
+    {
+        level = LevelManager.main;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
+        
         if (time > 500)
         {
-            time = 0;
+            //Pause the current scene
+            //Time.timeScale = 0.0f;
+            /* Debug.Log(level.materials);
+             PlayerPrefs.SetInt("Materials", level.materials);
+             PlayerPrefs.SetInt("Days", days);
+             PlayerPrefs.Save*/
+            //CrossFadeManager.instance.LoadNextLevel("GameHub");
+            StopGame();
+            //time = 0;
         }
 
         if((int)time ==250 && canDayChange)
@@ -42,5 +58,12 @@ public class WorldLight : MonoBehaviour
 
         time += Time.deltaTime;
         light.GetComponent<Light2D>().color = lightColor.Evaluate(time * 0.002f);
+    }
+
+    private void StopGame()
+    {
+        //Pause the current scene
+        //Time.timeScale = 0.0f;
+        CrossFadeManager.instance.LoadNextLevel("GameHub");
     }
 }
