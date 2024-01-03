@@ -86,6 +86,7 @@ namespace DIALOGUE
 
         public Coroutine Say(List<string> conversation)
         {
+          
             return conversationManager.StartConversation(conversation);
         }
     }

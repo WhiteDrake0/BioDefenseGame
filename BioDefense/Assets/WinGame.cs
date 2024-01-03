@@ -20,13 +20,14 @@ public class WinGame : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Button component not found on GameObject with SceneChangeButton script.");
+            //Debug.LogError("Button component not found on GameObject with SceneChangeButton script.");
         }
     }
 
     private void ChangeScene()
     {
-        SceneManager.LoadScene(sceneToLoad);
+        CrossFadeManager.instance.LoadNextLevel(sceneToLoad);
+        //SceneManager.LoadScene(sceneToLoad);
     }
 
 }

@@ -39,6 +39,6 @@ public class StartScreenController : MonoBehaviour
 
     public void ChangeScene()
     {
-        SceneManager.LoadScene("Office");
+        CrossFadeManager.instance.LoadNextLevel("CutScene");
     }
 }

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Character Configuration Asset
   m_EditorClassIdentifier: 
   characters:
-  - name: Seraphina
-    alias: sera
+  - name: Sera
+    alias: sr
     characterType: 1
-    nameColor: {r: 0, g: 0.082841404, b: 0.2264151, a: 1}
-    dialogueColor: {r: 0, g: 0.08235294, b: 0.22745098, a: 1}
+    nameColor: {r: 0, g: 0, b: 0, a: 1}
+    dialogueColor: {r: 0, g: 0, b: 0, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     dialogueFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - name: Elen

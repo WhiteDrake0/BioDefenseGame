@@ -12,9 +12,18 @@ EditorBuildSettings:
     path: Assets/_Main/Scenes/Intro.unity
     guid: 806f945a6f517e249badea32952e7678
   - enabled: 1
+    path: Assets/_Main/Scenes/CutScene.unity
+    guid: 6ce2c19e4047d5f4fb57f751174634a5
+  - enabled: 1
     path: Assets/_Main/Scenes/Office.unity
     guid: 769c41d2cc0543b478e281aa3f333e60
   - enabled: 1
     path: Assets/_Main/Scenes/BasicDesign.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/_Main/Scenes/EndScreen.unity
+    guid: aa405387a76327848b0f5f19f0155bb2
+  - enabled: 1
+    path: Assets/_Main/Scenes/GameHub.unity
+    guid: 31e023bbf468bca44896b69f53d4343b
   m_configObjects: {}

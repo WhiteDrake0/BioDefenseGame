@@ -18,6 +18,18 @@ namespace Testing
 
             //Background commands
             database.AddCommand("setbackground", new Action<string>(SetBackground));
+
+            //Scene commands
+            database.AddCommand("changescene", new Action<string>(ChangeScene));
+
+            //Buttons
+            database.AddCommand("showoptions", new Action(ShowOptions));
+
+        }
+
+        public static void ShowOptions()
+        {
+            InterfaceController.instance.ShowOptions();
         }
 
         public static void PlaySound(string soundName)
@@ -41,6 +53,14 @@ namespace Testing
         {
             BackgroundController.instance.SetBackground(name);
         }
+
+        public static void ChangeScene(string name)
+        {
+            Debug.Log(name);
+            CrossFadeManager.instance.LoadNextLevel(name);
+        }
+
+
         
     }
 }

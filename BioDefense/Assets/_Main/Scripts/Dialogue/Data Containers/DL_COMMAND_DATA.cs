@@ -32,7 +32,7 @@ namespace DIALOGUE
             {
                 Command command = new Command();
                 int index = cmd.IndexOf(ARGUMENTSCONTAINER_ID);
-                Debug.Log(cmd.Substring(0, index).Trim());
+                //Debug.Log(cmd.Substring(0, index).Trim());
                 command.name = cmd.Substring(0, index).Trim();
 
                 if (command.name.ToLower().StartsWith(WAITCOMMAND_ID))

@@ -44,7 +44,7 @@ namespace DIALOGUE
 
         IEnumerator RunningConversation(List<string> conversation)
         {
-            //Debug.Log(conversation.Count);
+            
             for(int i = 0; i < conversation.Count; i++)
             {
                 //Don't show any blank lines or try to run any logic on then.
@@ -52,8 +52,6 @@ namespace DIALOGUE
                     continue;
 
                 DIALOGUE_LINE line = DialogueParser.Parse(conversation[i]);
-
-                //Debug.Log(line);
 
                 //Show dialogue
                 if(line.hasDialogue)

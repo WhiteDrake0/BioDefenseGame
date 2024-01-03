@@ -24,23 +24,30 @@ namespace DIALOGUE
             int dialogueEnd = -1;
             bool isEscaped = false;
 
-            //Debug.Log(rawLine.Length);
-
             for(int i = 0; i < rawLine.Length; i++)
             {
                 char current = rawLine[i];
 
+                if(rawLine[i] == '"')
+                {
+                    
+                }
                 if (current == '\\')
-                    isEscaped = !isEscaped;
+                {
+                    
+                    isEscaped = true;
+                }
 
                 else if (current == '"' && !isEscaped)
                 {
-
+                    
                     if (dialogueStart == -1)
                         dialogueStart = i;
 
                     else if (dialogueEnd == -1)
                         dialogueEnd = i;
+
+                    
 
                 }
                 else
@@ -71,8 +78,8 @@ namespace DIALOGUE
             if (dialogueStart != -1 && dialogueEnd != -1 && (commandStart == -1 || commandStart > dialogueEnd))
             {
                 //We know that we have valid dialogue
-                Debug.Log(dialogueStart);
                 speaker = rawLine.Substring(0, dialogueStart).Trim();
+                
                 dialogue = rawLine.Substring(dialogueStart + 1, dialogueEnd - dialogueStart - 1).Replace("\\\"", "\"");
                 if (commandStart != -1)
                     commands = rawLine.Substring(commandStart).Trim();

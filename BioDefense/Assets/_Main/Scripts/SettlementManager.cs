@@ -16,7 +16,7 @@ public class SettlementManager : MonoBehaviour
     void SpawnInitialStructure()
     {
         // Instantiate the initial structure
-        Instantiate(settlementStructurePrefab, transform.position, Quaternion.identity);
+        //Instantiate(settlementStructurePrefab, transform.position, Quaternion.identity);
     }
 
     public void UpgradeStructure()

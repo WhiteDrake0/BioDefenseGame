@@ -1,0 +1,7 @@
+CreateCharacter(Sera -e true)
+
+Sera "Good morning Captain! I hope you had a good night rest."
+
+Sera "So lets start?"
+
+ShowOptions()

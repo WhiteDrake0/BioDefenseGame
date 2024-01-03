@@ -58,6 +58,7 @@ namespace CHARACTERS
                 ob.name = manager.FormatCharacterPath(manager.characterPrefabNameFormat, name);
                 ob.SetActive(true);
                 root = ob.GetComponent<RectTransform>();
+                Debug.Log(root);
                 animator = root.GetComponentInChildren<Animator>();
             }
         }

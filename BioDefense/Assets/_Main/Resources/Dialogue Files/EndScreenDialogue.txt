@@ -1,0 +1,5 @@
+Narrator "The science team of the biohazard defense force was able to create the bioweapon capable to put an end to this nightmare and allow humanity to prosper once again."
+
+Narrator "The End."
+
+ChangeScene(StartScreen)
